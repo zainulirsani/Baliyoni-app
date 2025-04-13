@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+
+  &__h3 {
+    margin: 0;
+    color: #800020;
+    font-weight: 800;
+    line-height: 42px;
+    flex-grow: 1;
+    text-align: center;
+  }
+  &__p {
+    color: #828ea5;
+  }
+}

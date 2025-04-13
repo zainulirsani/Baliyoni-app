@@ -1,0 +1,12 @@
+.content {
+  padding: 32px;
+  background: #ffffffd2;
+  min-height: 100vh;
+  margin-left: 260px;
+  transition: all 0.5s ease;
+  border-radius: 50px 0 0 50px;
+}
+
+.content.active {
+  margin-left: 0px;
+}
