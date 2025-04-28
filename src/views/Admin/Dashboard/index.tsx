@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./dashboard.module.scss";
-import { PerusahaanType } from "@/type/Perusahaan.type";
+import { PerusahaanType } from "@/types/Perusahaan.type";
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";

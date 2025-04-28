@@ -1,6 +1,6 @@
 import UserView from "@/views/Admin/Users";
-import { PerusahaanType } from "@/type/Perusahaan.type";
-import { UserType } from "@/type/User.type";
+import { PerusahaanType } from "@/types/Perusahaan.type";
+import { UserType } from "@/types/User.type";
 
 interface UsersPageProps {
     users: UserType[];

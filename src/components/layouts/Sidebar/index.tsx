@@ -4,15 +4,40 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 type SidebarProps = {
   isActive: boolean;
   toggleSidebar: () => void;
 };
 
-const Sidebar = ({ isActive, toggleSidebar }: SidebarProps) => {
-  const router = useRouter();
 
+const Sidebar = ({ isActive, toggleSidebar}: SidebarProps) => {
+  const router = useRouter();
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = Cookies.get("access_token");
+
+    if (!token) {
+      console.warn("Token tidak ditemukan");
+      return;
+    }
+
+    axios.get("http://127.0.0.1:8000/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        const user = response.data;
+        setUserRole(user.result.role); // pastikan `role` memang ada di response
+      })
+      .catch(error => {
+        console.error("Gagal mengambil data user:", error);
+      });
+  }, []);
   const handleLogout = () => {
     Swal.fire({
       title: "Logout",
@@ -39,9 +64,15 @@ const Sidebar = ({ isActive, toggleSidebar }: SidebarProps) => {
       }
     });
   };
-
+  const dashboardPath = userRole === "admin"
+    ? "/admin"
+    : userRole === "manager"
+      ? "/manager"
+      : userRole === "kadiv"
+        ? "/kadiv"
+        : "/";
   return (
-    <nav className={`${isActive ? 'show' : 'hide'}`}>
+    <nav className={`${isActive ? "show" : "hide"}`}>
       {/* Tombol Close Sidebar (khusus mobile) */}
       <div className="d-flex justify-content-end m-3 d-block d-lg-none">
         <button
@@ -53,7 +84,7 @@ const Sidebar = ({ isActive, toggleSidebar }: SidebarProps) => {
           <i className="fas fa-close"></i>
         </button>
       </div>
-    
+
       {/* Logo */}
       <div className="d-flex justify-content-center mt-md-5 mb-5">
         <Image src="/images/images.png" alt="Logo" width="150" height="50" />
@@ -63,14 +94,27 @@ const Sidebar = ({ isActive, toggleSidebar }: SidebarProps) => {
       <div className="pt-2 d-flex flex-column gap-5">
         <div className={`${styles.menu} p-0`}>
           <p>Daily Use</p>
-          <Link href="/admin" className={`${styles.itemMenu} ${router.pathname === "/admin" ? styles.active : ""}`} onClick={toggleSidebar}>
+
+          <Link
+            href={dashboardPath}
+            className={`${styles.itemMenu} ${router.pathname === dashboardPath ? styles.active : ""
+              }`}
+          >
             <i className={`${styles.icon} ${styles.icStats}`}></i>
             Overview
           </Link>
-          <Link href="/admin/users" className={`${styles.itemMenu} ${router.pathname === "/admin/users" ? styles.active : ""}`} onClick={toggleSidebar}>
-            <i className={`${styles.icon} ${styles.icPerson}`}></i>
-            Data Pengguna
-          </Link>
+
+
+          {userRole === "admin" && (
+            <Link
+              href="/admin/users"
+              className={`${styles.itemMenu} ${router.pathname === "/admin/users" ? styles.active : ""}`}
+
+            >
+              <i className={`${styles.icon} ${styles.icPerson}`}></i>
+              Data Pengguna
+            </Link>
+          )}
         </div>
 
         <div className={styles.menu}>

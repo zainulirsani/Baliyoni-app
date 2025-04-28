@@ -1,9 +1,9 @@
-import { PerusahaanType } from "@/types/Perusahaan.type";
-import Dashboard from "@/views/Admin/Dashboard";
 import { checkPageAccess } from "@/lib/checkPageAccess";
+import { PerusahaanType } from "@/types/Perusahaan.type";
+import Dashboard from "@/views/Kadiv/Dashboard";
 import { GetServerSidePropsContext } from "next";
-import nookies from "nookies";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 import { useEffect } from "react";
 type Props = {
     perusahaans?: PerusahaanType[] | null;
@@ -11,7 +11,7 @@ type Props = {
     userRole: string;
 };
 
-const DashboardAdmin = ({ hasAccess, userRole, perusahaans }: Props) => {
+const DashboardKadiv = ({ hasAccess, userRole, perusahaans }: Props) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -23,7 +23,6 @@ const DashboardAdmin = ({ hasAccess, userRole, perusahaans }: Props) => {
     if (!hasAccess || !perusahaans) {
         return null; // kosongkan tampilan saat proses redirect
     }
-
     return (
         <div>
             <Dashboard perusahaans={perusahaans} />
@@ -31,7 +30,7 @@ const DashboardAdmin = ({ hasAccess, userRole, perusahaans }: Props) => {
     );
 };
 
-export default DashboardAdmin;
+export default DashboardKadiv;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const cookies = nookies.get(ctx);
@@ -80,7 +79,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         };
     }
 
-    const res = await fetch("http://127.0.0.1:8000/api/perusahaan", {
+    const res = await fetch(`http://127.0.0.1:8000/api/perusahaan/${userId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -92,8 +91,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         props: {
             hasAccess: true,
             userRole,
-            perusahaans: response,
+            perusahaans: response.result.perusahaan_diakses,
         },
     };
 }
-

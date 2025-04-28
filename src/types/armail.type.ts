@@ -46,6 +46,7 @@ export type SuratType = {
   tanggal_awal: string;
   tanggal_akhir: string;
   perihal?: string;
+  keterangan?: string;
 };
 export type JenisSurat =
   | "CSR"

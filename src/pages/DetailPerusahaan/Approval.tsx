@@ -1,5 +1,5 @@
-import ApprovalView from "@/views/Manager/DetailPerusahaan/Approval";
-import { ApprovalType } from "@/type/approval.type";
+import ApprovalView from "@/views/DetailPerusahaan/Approval";
+import { ApprovalType } from "@/types/approval.type";
 import App from "next/app";
 
 const ApprovalPage = (props: { approvals: [ApprovalType] }) => {
@@ -10,7 +10,17 @@ const ApprovalPage = (props: { approvals: [ApprovalType] }) => {
 };
 
 export default ApprovalPage;
-
+// export async function getServerSideProps() {
+//     const res = await fetch('http://127.0.0.1:8001/api/approval');
+//     const response = await res.json();
+  
+//     return {
+//       props: {
+//         approvals: response.data,
+//       },
+//     };
+//   }
+  
 export async function getStaticProps() {
     const res = await fetch('http://127.0.0.1:8001/api/approval');
     const response = await res.json();

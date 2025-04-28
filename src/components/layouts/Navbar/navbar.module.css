@@ -24,7 +24,8 @@
 }
 
 .userName {
-  font-weight: 500;
+  font-weight: 600;
+  color: rgb(62, 63, 63);
 }
 
 .avatar {

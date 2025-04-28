@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "@/styles/arcare.module.scss";
 import DateRangeInput from "@/components/elements/Daterange/Daterange";
-import { ArcareType } from "@/type/arcare.type";
+import { ArcareType } from "@/types/arcare.type";
 import $ from "jquery";
 import "datatables.net-responsive-dt/css/responsive.dataTables.css";
 import "datatables.net";
@@ -20,11 +20,7 @@ interface Props {
 }
 
 const ArcareView: React.FC<Props> = ({ data }) => {
-  const tableRef = useRef<HTMLTableElement>(null); // 🟢 Menggunakan ref
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
-  const [filteredTickets, setFilteredTickets] = useState<ArcareType[]>(data.tiket || []);
-
+  const tableRef = useRef<HTMLTableElement>(null);
   const summaryCards = [
     { title: "Total Ticket", value: data.totalTiket || 0, icon: "fas fa-ticket" },
     { title: "Ticket Menunggu", value: data.menunggu || 0, icon: "fas fa-ticket-alt" },
@@ -34,56 +30,50 @@ const ArcareView: React.FC<Props> = ({ data }) => {
     { title: "Ticket Dibatalkan", value: data.batal || 0, icon: "fas fa-times-circle" },
   ];
 
-  useEffect(() => {
-    const tableElement = $(tableRef.current!); // pastikan ref tidak null
-    let dataTable: any;
+  const [filteredTickets, setFilteredTickets] = useState<ArcareType[]>(data.tiket);
+  const [dateRange, setDateRange] = useState<{ startDate: Date | null; endDate: Date | null }>({
+    startDate: null,
+    endDate: null,
+  });
 
-    if (($.fn.DataTable as any).isDataTable("#example")) {
-      dataTable = tableElement.DataTable();
-      dataTable.clear().destroy();
-    }
+  const handleDateChange = (range: { startDate: string; endDate: string }) => {
+    const start = range.startDate ? new Date(range.startDate) : null;
+    const end = range.endDate ? new Date(range.endDate) : null;
 
-    setTimeout(() => {
-      dataTable = tableElement.DataTable({
-        responsive: true,
-        autoWidth: false,
-        paging: true,
-        searching: true,
-        info: false,
-        language: {
-          searchPlaceholder: "Cari satuan kerja...",
-          search: "",
-          emptyTable: "Belum ada data tersedia",
-        },
-        drawCallback: function () {
-          $('.dataTables_paginate > .pagination').addClass('pagination-sm');
-        }
-      });
-    }, 0);
+    setDateRange({ startDate: start, endDate: end });
 
-    return () => {
-      if (dataTable) {
-        dataTable.destroy();
-      }
-    };
-  }, [filteredTickets]); // 🟡 Trigger datatable ulang hanya saat data berubah
-
-  useEffect(() => {
-    if (startDate && endDate) {
-      const filtered = data.tiket.filter((ticket: ArcareType) => {
+    if (start && end) {
+      const filtered = data.tiket.filter((ticket) => {
         const ticketDate = new Date(ticket.tanggal_dibuat);
-        return ticketDate >= new Date(startDate) && ticketDate <= new Date(endDate);
+        return ticketDate >= start && ticketDate <= end;
       });
       setFilteredTickets(filtered);
     } else {
       setFilteredTickets(data.tiket);
     }
-  }, [startDate, endDate, data.tiket]);
-
-  const handleDateChange = ({ startDate, endDate }: { startDate: string; endDate: string }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
   };
+
+
+  useEffect(() => {
+    if (!tableRef.current) return;
+
+    const tableElement = $(tableRef.current);
+    let dataTable: any;
+
+    if (($.fn.DataTable as any).isDataTable("#dataTable")) {
+      dataTable = tableElement.DataTable();
+      dataTable.clear().destroy();
+    }
+    
+    return () => {
+      if (dataTable) {
+        dataTable.destroy();
+      }
+    };
+  }, [filteredTickets]);
+
+  // trigger ulang datatables jika filtered berubah
+
 
   return (
     <section className="p-3">

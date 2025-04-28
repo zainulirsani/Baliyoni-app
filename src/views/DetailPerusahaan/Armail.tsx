@@ -6,7 +6,7 @@ import { BarChartVertical } from "@/components/elements/Chart/BarchartVertical";
 import CustomCalender from "@/components/elements/Calender/Calender";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net";
-import { ArmailType } from "@/type/armail.type";
+import { ArmailType } from "@/types/armail.type";
 import DateYearInput from "@/components/elements/Daterange/DateYear";
 
 type JenisSurat =
@@ -69,11 +69,6 @@ const ArmaiView: React.FC<ArmailViewProps> = ({ data }) => {
       jumlahMap[bulan][jenis] = typeof suratData[jenis] === "number" ? suratData[jenis]! : 0;
     });
   });
-  useEffect(() => {
-    console.log('Data API:', data); // Cek apakah data sudah terisi
-  }, [data]);
-  
-  console.log('Data hasil API:', data?.result);
   return (
     <section className={styles.container}>
       <header className={`${styles.header} d-flex justify-content-between`}>
@@ -93,7 +88,6 @@ const ArmaiView: React.FC<ArmailViewProps> = ({ data }) => {
       <div className="row px-1 gap-3 justify-content-center my-4">
         {jenisList.map((jenis) => {
           const value = data?.result?.[jenis] ?? 0;  // Jika data kosong, fallback ke 0
-          console.log(`Data untuk ${jenis}:`, value);  // Log untuk memastikan nilai yang diterima
 
           return (
             <div key={jenis} className={`${styles.smallCard} col-xl-2 col-12 card`}>

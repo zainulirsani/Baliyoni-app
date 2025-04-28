@@ -1,5 +1,5 @@
-import { ArcareDataType } from "@/type/arcare.type";
-import ArcareView from "@/views/Manager/DetailPerusahaan/Arcare";
+import { ArcareDataType } from "@/types/arcare.type";
+import ArcareView from "@/views/DetailPerusahaan/Arcare";
 
 const ArcarePage = ({ arcare }: { arcare: ArcareDataType }) => {
   return <ArcareView data={arcare} />;

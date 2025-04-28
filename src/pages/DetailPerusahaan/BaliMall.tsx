@@ -1,7 +1,8 @@
-import { BalimallType } from "@/type/balimall.type";
-import BaliMallView from "@/views/Manager/DetailPerusahaan/BaliMall";
+import { BalimallType } from "@/types/balimall.type";
+import BaliMallView from "@/views/DetailPerusahaan/BaliMall";
 
-const BaliMallPage = ({balimall}:{ balimall: BalimallType}) => {
+const BaliMallPage = ({ balimall }: { balimall: BalimallType }) => {
+    
     return (
         <BaliMallView data={balimall} />
     )
@@ -16,5 +17,6 @@ export async function getStaticProps() {
         props: {
            balimall : response
         },
+        revalidate: 500
     };
 }

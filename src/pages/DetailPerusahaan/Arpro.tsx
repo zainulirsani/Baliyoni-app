@@ -1,8 +1,8 @@
-import { ArproType } from "@/type/arpro.type";
-import ArproView from "@/views/Manager/DetailPerusahaan/Arpro";
+import { ArproType } from "@/types/arpro.type";
+import ArproView from "@/views/DetailPerusahaan/Arpro";
 
 interface ArproPageProps {
-  arpro: ArproType[];
+  arpro: ArproType;
 }
 
 const ArproPage = ({ arpro }: ArproPageProps) => {
@@ -17,7 +17,7 @@ export async function getStaticProps() {
 
   return {
       props: {
-          arpro: response.data.totalPertanggal,
+      arpro: response
       },
       revalidate: 500,
   };

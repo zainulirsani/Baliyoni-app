@@ -13,9 +13,10 @@ interface LineChartProps {
   };
   titleX?: string;
   titleY?: string;
+  isNominal?: boolean;  // Prop to determine if data is nominal
 }
 
-const LineChart: React.FC<LineChartProps> = ({ chartData, titleX, titleY }) => {
+const LineChart: React.FC<LineChartProps> = ({ chartData, titleX, titleY, isNominal }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -68,7 +69,11 @@ const LineChart: React.FC<LineChartProps> = ({ chartData, titleX, titleY }) => {
               callbacks: {
                 label: function (tooltipItem) {
                   const value = tooltipItem.raw as number;
-                  return `Rp ${value.toLocaleString("id-ID")}`;
+                  // Conditionally add "Rp" for nominal data
+                  if (isNominal) {
+                    return `Rp ${value.toLocaleString("id-ID")}`;
+                  }
+                  return`Total ${value.toLocaleString("id-ID")}`; // Just return the number for non-nominal data
                 },
               },
             },
@@ -103,7 +108,7 @@ const LineChart: React.FC<LineChartProps> = ({ chartData, titleX, titleY }) => {
 
       return () => myChart.destroy();
     }
-  }, [chartData, titleX, titleY]);
+  }, [chartData, titleX, titleY, isNominal]);
 
   return (
     <div
@@ -115,7 +120,7 @@ const LineChart: React.FC<LineChartProps> = ({ chartData, titleX, titleY }) => {
         padding: "0 10px",
       }}
     >
-      <div style={{ height: "350px" }}>
+      <div style={{ height: "400px" }}>
         <canvas ref={chartRef} />
       </div>
     </div>

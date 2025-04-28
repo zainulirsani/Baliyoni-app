@@ -1,5 +1,5 @@
 import styles from "@/styles/BaliMall.module.scss";
-import { BalimallType } from "@/type/balimall.type";
+import { BalimallType } from "@/types/balimall.type";
 import Barchart from "@/components/elements/Chart/Barchart";
 import DateYearInput from "@/components/elements/Daterange/DateYear";
 import React, { useEffect, useState } from 'react';
@@ -80,8 +80,7 @@ const BaliMallView: React.FC<BaliMallViewProps> = ({ data }) => {
 
   useEffect(() => {
     if (selectedYear && data?.result) {
-      // Debug log untuk memastikan data structure
-      console.log("data.result", data.result);
+
       const total = data.result.total_order_by_year?.find((item: any) => item.tahun === selectedYear);
       const transaksi = data.result.total_order_by_month?.find((item: any) => item.tahun === selectedYear);
       const nominal = data.result.total_nominal_by_month?.find((item: any) => item.tahun === selectedYear);
@@ -100,14 +99,6 @@ const BaliMallView: React.FC<BaliMallViewProps> = ({ data }) => {
       const totalByStateData = totalByState?.data || [];
       const totalByMerchantData = totalByMerchant?.data ?? [];
 
-      // Log data untuk debugging
-      console.log("totalData", totalData);
-      console.log("transaksiData", transaksiData);
-      console.log("nominalData", nominalData);
-      console.log("totalByCategoryData", totalByCategoryData);
-      console.log("nominalByCategoryData", nominalByCategoryData);
-      console.log("totalByStateData", totalByStateData);
-      console.log("totalByMerchantData", totalByMerchantData);
 
       // Safe mapping with default empty array if data is not object
       const formattedTotal = Object.entries(totalData ?? {}).map(
@@ -173,7 +164,6 @@ const BaliMallView: React.FC<BaliMallViewProps> = ({ data }) => {
   const handleYearChange = (year: number) => {
     setSelectedYear(year);
   };
-  console.log("filteredTotalData", filteredTotalData);
 
   return (
     <section className="p-3">

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt/css/dataTables.dataTables.min.css';
 import 'datatables.net';
-import { UserType } from '@/type/User.type';
+import { UserType } from '@/types/User.type';
 import Users from "@/components/elements/Form/Users";
 import Swal from "sweetalert2";
-import { PerusahaanType } from "@/type/Perusahaan.type";
+import { PerusahaanType } from "@/types/Perusahaan.type";
 import router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
@@ -99,8 +99,6 @@ const UserView = ({ users, devisis }: { users: UserType[], devisis: PerusahaanTy
             });
     
             const responseData = await response.json();
-            console.log('🔹 Status Response:', response.status);
-            console.log('🔹 Response dari API:', responseData);
     
             if (response.ok) {
                 Swal.fire({

@@ -1,5 +1,5 @@
-import { ArmailType } from "@/type/armail.type";
-import ArmaiView from "@/views/Manager/DetailPerusahaan/Armail";
+import { ArmailType } from "@/types/armail.type";
+import ArmaiView from "@/views/DetailPerusahaan/Armail";
 
 
 const ArmailPage = ({ armail}: { armail: ArmailType}) => {
@@ -17,5 +17,6 @@ export async function getStaticProps() {
         props: {
            armail : response
         },
+        revalidate: 500
     };
 }
