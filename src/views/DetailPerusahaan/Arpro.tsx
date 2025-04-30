@@ -13,7 +13,7 @@ interface ArproViewProps {
 }
 
 const ArproView: React.FC<ArproViewProps> = ({ data }) => {
-  const [selectedChart, setSelectedChart] = useState<'total' | 'sepakat' | 'penawaran' | 'draft' | 'informasiHarga'>('total');
+  const [selectedChart, setSelectedChart] = useState<'semua' | 'sepakat' | 'penawaran' | 'draft' | 'informasiHarga'>('semua');
   const [selectData, setSelectData] = useState<'total' | 'nominal'>('total');
 
   const presaleByMonth = data.result.presaleByMonth || [];
@@ -46,7 +46,6 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
     [presaleByMonth, selectedYear]
   );
 
-  console.log('total pertanggal', totalPertanggal);
 
   const jumlahMap: Record<string, Record<JenisStatus, number>> = useMemo(() => {
     const map: Record<string, Record<JenisStatus, number>> = {};
@@ -146,7 +145,7 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
   }));
 
   const getDataForChart = () => {
-    if (selectedChart === 'total') {
+    if (selectedChart === 'semua' && selectData === 'total') {
       return {
         labels: dataForChart.map(item => item.tanggal),
         datasets: [
@@ -156,10 +155,121 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
             borderColor: "rgb(75, 192, 192)",
             backgroundColor: "rgba(75, 192, 192, 0.2)",
           },
+        ],
+      };
+    }
+    else if (selectedChart === 'semua' && selectData === 'nominal') {
+      return {
+        labels: dataForChart.map(item => item.tanggal),
+        datasets: [
           {
             label: "Total Nego",
             data: dataForChart.map(item => item.nominal),
-            borderColor: "rgb(255, 99, 132)",
+            borderColor: "rgb(83, 112, 207)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'sepakat' && selectData === 'total') {
+      return {
+        labels: dataForChartSepakat.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartSepakat.map(item => item.jumlah),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'sepakat' && selectData === 'nominal') {
+      return {
+        labels: dataForChartSepakat.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartSepakat.map(item => item.nominal),
+            borderColor: "rgb(83, 112, 207)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'penawaran' && selectData === 'total') {
+      return {
+        labels: dataForChartPenawaran.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartPenawaran.map(item => item.jumlah),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'penawaran' && selectData === 'nominal') {
+      return {
+        labels: dataForChartPenawaran.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartPenawaran.map(item => item.nominal),
+            borderColor: "rgb(83, 112, 207)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'draft' && selectData === 'total') {
+      return {
+        labels: dataForChartDraft.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartDraft.map(item => item.jumlah),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'draft' && selectData === 'nominal') {
+      return {
+        labels: dataForChartDraft.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartDraft.map(item => item.nominal),
+            borderColor: "rgb(83, 112, 207)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'informasiHarga' && selectData === 'total') {
+      return {
+        labels: dataForChartInformasi.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartInformasi.map(item => item.jumlah),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+          },
+        ],
+      };
+    }
+    else if (selectedChart === 'informasiHarga' && selectData === 'nominal') {
+      return {
+        labels: dataForChartInformasi.map(item => item.tanggal),
+        datasets: [
+          {
+            label: "Total Nego",
+            data: dataForChartInformasi.map(item => item.nominal),
+            borderColor: "rgb(83, 112, 207)",
             backgroundColor: "rgba(255, 99, 132, 0.2)",
           },
         ],
@@ -235,8 +345,8 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
               value={selectedChart}
               onChange={(e) => setSelectedChart(e.target.value as any)}
             >
-              <option value="total">Semua Status</option>
-              <option value="sepakat">Approved</option>
+              <option value="semua">Semua Status</option>
+              <option value="sepakat">Sepakat</option>
               <option value="penawaran">Penawaran</option>
               <option value="draft">Draft</option>
               <option value="informasiHarga">Informasi Harga</option>
@@ -248,42 +358,24 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
         <div className="card-body collapse show" id="grafikPresaleCollapse">
           <div className="mt-3 d-flex gap-2 justify-content-end">
             <button
-              className={`btn btn-sm ${selectedChart === 'total' ? 'btn-success' : 'btn-outline-success'}`}
-              onClick={() => setSelectedChart('total')}
+              className={`btn btn-sm ${selectData === 'total' ? 'btn-success' : 'btn-outline-success'}`}
+              onClick={() => setSelectData('total')}
             >
-              Semua Status
+              Total
             </button>
             <button
-              className={`btn btn-sm ${selectedChart === 'sepakat' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setSelectedChart('sepakat')}
+              className={`btn btn-sm ${selectData === 'nominal' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setSelectData('nominal')}
             >
-              Approved
-            </button>
-            <button
-              className={`btn btn-sm ${selectedChart === 'penawaran' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setSelectedChart('penawaran')}
-            >
-
-            </button>
-            <button
-              className={`btn btn-sm ${selectedChart === 'draft' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setSelectedChart('draft')}
-            >
-
-            </button>
-            <button
-              className={`btn btn-sm ${selectedChart === 'informasiHarga' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setSelectedChart('informasiHarga')}
-            >
-
+              Nominal
             </button>
           </div>
           {/* Chart */}
           <div className="chart-container" style={{ height: "400px", width: "97%" }}>
             <LineChart
               chartData={getDataForChart()!}
-              titleX="Tanggal Approval"
-              titleY="Total Harga dan Total Nego"
+              titleX="Tanggal"
+              titleY="Jumlah / Nominal"
               isNominal={true}
             />
 
