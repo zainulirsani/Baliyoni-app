@@ -332,6 +332,64 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
         <h3 className={styles.header__h3}>ArPro</h3>
       </header>
 
+      <div className="row px-1 gap-4 justify-content-center mb-3">
+        <div className={`${styles.mediumCard} col-xl-2 col-6 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Total Pre Sale</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 3,000,000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-6 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre Sale Sepakat</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-12 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre Sale Tidak Sepakat</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 3,000,000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-12 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre Sale Penawaran</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 3,000,000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-12 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre Sale Penawaran Harga</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 3,000,000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-12 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre sale Aprovval</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 3,000,000</h5>
+          </div>
+        </div>
+        <div className={`${styles.mediumCard} col-xl-2 col-12 card`}>
+          <div
+            className="card-content d-flex flex-column align-items-center justify-content-center"
+          >
+            <p className={`${styles.mediumCard__description} text-center`}>Pre Sale Draft</p>
+            <h5 className={`${styles.mediumCard__number}`}>Rp. 000</h5>
+          </div>
+        </div>
+      </div>
       {/* Grafik */}
       <div className="card shadow-sm border-0 mb-3">
         <div className={`${styles.chart} card-header d-flex justify-content-between align-items-center text-white`}>

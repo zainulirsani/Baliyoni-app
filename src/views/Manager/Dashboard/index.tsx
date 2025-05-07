@@ -42,8 +42,8 @@ const Dashboard = ({ perusahaans }: { perusahaans: PerusahaanType[] }) => {
               src={`http://127.0.0.1:8000/uploads/${perusahaan.logo}`}
               alt={`Logo ${perusahaan.nama_perusahaan}`}
               className={styles.card__img}
-              width={300}
-              height={300}
+              width={100}
+              height={50}
             />
             <a href={`DetailPerusahaan/${perusahaan.slug}`} className={`${styles.card__btn} text-center`}>
               Detail
