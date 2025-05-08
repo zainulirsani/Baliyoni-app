@@ -67,6 +67,7 @@
     "react-easy-crop": "^5.4.1",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.3.0",
+    "react-table": "^7.8.0",
     "sass": "^1.85.1",
     "sweetalert2": "^11.17.2",
     "tippy.js": "^6.3.7",
