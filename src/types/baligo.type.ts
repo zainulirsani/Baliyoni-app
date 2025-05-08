@@ -1,7 +1,23 @@
-export interface baligoType {
-    user_count: number;
-    kurir_count: number;
-    kendaraan_count: number;
-    pengiriman_count: number;
-    pengiriman_selesai_count: number;
+import { ex } from "@fullcalendar/core/internal-common";
+
+  export interface baligoType {
+      user_count: number;
+      kurir_count: number;
+      kendaraan_count: number;
+      pengiriman_count: PengirimanItem[];
+      pengiriman_selesai_count: PengirimanSelesai[];
+      revenue: revenue[];
+      date: string;
+  }
+  export interface PengirimanItem {
+    date: string;
+    count: number;
+}
+export interface PengirimanSelesai{
+    date: string;
+    count: number;
+}
+export interface revenue{
+    date: string;
+    count: number;
 }
