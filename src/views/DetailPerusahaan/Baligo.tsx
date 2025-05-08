@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 
-const Maps = dynamic(() => import('@/components/elements/maps/maps'), { ssr: false });
 import styles from "@/styles/baligo.module.scss";
 import { baligoType } from "@/types/baligo.type";
 import DateRangeInput from '@/components/elements/Daterange/Daterange';
@@ -54,7 +53,7 @@ const BaligoView = ({ data }: { data: baligoType }) => {
             setFilteredDataPengirimanSelesai(data.pengiriman_selesai_count);
             setFilteredDataRevenue(data.revenue);
         }
-    }, [startDate, endDate, data.pengiriman_count]);
+    }, [startDate, endDate, data.pengiriman_count, data.pengiriman_selesai_count, data.revenue]);
     
 
     const totalPengiriman = filteredDataPengiriman.reduce((sum, item) => sum + item.count, 0);

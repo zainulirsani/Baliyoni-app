@@ -16,12 +16,13 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
   const [selectedChart, setSelectedChart] = useState<'semua' | 'sepakat' | 'penawaran' | 'draft' | 'informasiHarga'>('semua');
   const [selectData, setSelectData] = useState<'total' | 'nominal'>('total');
 
-  const presaleByMonth = data.result.presaleByMonth || [];
-  const totalPertanggal = data.result.total || [];
-  const totalSepakat = data.result.totalSepakat || [];
-  const totalPenawaran = data.result.totalPenawaran || [];
-  const totalInformasi = data.result.totalInformasiHarga || [];
-  const totalDraft = data.result.totalDraft || [];
+  const presaleByMonth = useMemo(() => data.result.presaleByMonth || [], [data.result.presaleByMonth]);
+  const totalPertanggal = useMemo(() => data.result.total || [], [data.result.total]);
+  const totalSepakat = useMemo(() => data.result.totalSepakat || [], [data.result.totalSepakat]);
+  const totalPenawaran = useMemo(() => data.result.totalPenawaran || [], [data.result.totalPenawaran]);
+  const totalInformasi = useMemo(() => data.result.totalInformasiHarga || [], [data.result.totalInformasiHarga]);
+  const totalDraft = useMemo(() => data.result.totalDraft || [], [data.result.totalDraft]);
+  
 
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
@@ -281,7 +282,11 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
     setSelectedYear(year);
   }, []);
 
-  const jenisList: JenisStatus[] = ['Sepakat', 'Penawaran', 'Informasi Harga', 'Draft', 'Tidak Sepakat'];
+  const jenisList: JenisStatus[] = useMemo(
+    () => ['Sepakat', 'Penawaran', 'Informasi Harga', 'Draft', 'Tidak Sepakat'],
+    []
+  );
+  
 
   const bulanList: string[] = [
     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
@@ -307,7 +312,7 @@ const ArproView: React.FC<ArproViewProps> = ({ data }) => {
     if (!yearsWithData.includes(selectedYear) && yearsWithData.length > 0) {
       setSelectedYear(Math.max(...yearsWithData));
     }
-  }, [presaleByMonth, selectedYear]);
+  }, [presaleByMonth, selectedYear, jenisList]);
 
   useEffect(() => {
     const tableId = "#dataTable";
